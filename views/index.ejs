@@ -9,7 +9,7 @@
         $(function() {
             $('button#get-headline').click(function() {
                 $.get('/headline', function(res) {
-                    $('p#headline').text(res.headline);
+                    $('h3#headline').text(res.headline);
                 });
             });
         });
@@ -19,7 +19,7 @@
 <div class="container">
     <h1>newsfaker</h1>
     <button id="get-headline" class="button-primary">Get headline</button>
-    <p id="headline"></p>
+    <h3 id="headline"></h3>
 </div>
 </body>
 </html>
