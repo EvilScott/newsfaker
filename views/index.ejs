@@ -4,11 +4,22 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.min.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('button#get-headline').click(function() {
+                $.get('/headline', function(res) {
+                    $('p#headline').text(res.headline);
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="container">
     <h1>newsfaker</h1>
-    <p>test</p>
+    <button id="get-headline" class="button-primary">Get headline</button>
+    <p id="headline"></p>
 </div>
 </body>
 </html>
