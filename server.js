@@ -1,11 +1,27 @@
-var express = require('express'),
-    redis = require('redis').createClient('6379', 'redis');
+const express = require('express'),
+    markov = require('./markov');
 
-var app = express();
+// serve views as ejs
+const app = express();
 app.set('view engine', 'ejs');
 
-app.get('/', function(req, res) {
-    res.render('index');
+// home page
+app.get('/', (req, res) => res.render('index'));
+
+// markov endpoint
+app.get('/headline', (req, res) => {
+    markov.generateHeadline()
+        .then(val => res.json(val))
+        .catch(err => res.send(err));
 });
 
-app.listen(4000);
+// generate dictionary if needed, then start server
+markov.dictionaryExists().then(exists => {
+    if (exists) {
+        app.listen(4000);
+    }  else {
+        markov.generateDictionary()
+            .then(_ => app.listen(4000))
+            .catch(err => console.log(err.stack));
+    }
+}).catch(err => console.log(err.stack));
