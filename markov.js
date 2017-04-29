@@ -20,7 +20,7 @@ const markov = {
                 while (words.length > 1) {
                     let word = words.shift();
                     if (!dict.hasOwnProperty(word)) dict[word] = [];
-                    dict[word].push(words[0]);
+                    dict[word].push(words[0].trim());
                 }
             });
             const dictValues = _.flatten(_.map(dict, (val, key) => [key, val.join(',')]));
@@ -30,8 +30,18 @@ const markov = {
         });
     },
 
-    generateHeadline: () => {
-        return Q.ninvoke(redis, 'hget', DICT_KEY, '^');
+    generateHeadline: (headline = ['^']) => {
+        const lastWord = headline[headline.length - 1];
+        return Q.ninvoke(redis, 'hget', DICT_KEY, lastWord).then(words => {
+            if (lastWord !== null && lastWord !== '$' && headline.length < MAX_LENGTH) {
+                headline.push(_.sample(words.split(',')));
+                return markov.generateHeadline(headline);
+            } else {
+                headline.shift();
+                headline.pop();
+                return headline.join(' ');
+            }
+        });
     }
 };
 

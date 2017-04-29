@@ -11,8 +11,8 @@ app.get('/', (req, res) => res.render('index'));
 // markov endpoint
 app.get('/headline', (req, res) => {
     markov.generateHeadline()
-        .then(val => res.json(val))
-        .catch(err => res.send(err));
+        .then(val => res.json({ headline: val }))
+        .catch(err => res.send(err.stack));
 });
 
 // generate dictionary if needed, then start server
