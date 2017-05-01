@@ -46,3 +46,5 @@ const markov = {
 };
 
 module.exports = markov;
+
+if (require.main === module) markov.generateDictionary();

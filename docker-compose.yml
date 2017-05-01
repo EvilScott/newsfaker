@@ -1,11 +1,24 @@
-web:
-  build: .
-  ports:
-    - "4000:4000"
-  volumes:
-    - ".:/app"
-  links:
-    - "redis:redis"
+version: '3.0'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: 'Dockerfile.web'
+    ports:
+      - "4000:4000"
+    volumes:
+      - ".:/app"
+    links:
+      - "redis:redis"
+    depends_on:
+      - dict
 
-redis:
-  image: redis
+  dict:
+    build:
+      context: .
+      dockerfile: 'Dockerfile.dict'
+    links:
+      - "redis:redis"
+
+  redis:
+    image: redis

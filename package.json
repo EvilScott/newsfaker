@@ -12,6 +12,7 @@
     "redis": "^2.7.1"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "build-dict": "node markov.js"
   }
 }
