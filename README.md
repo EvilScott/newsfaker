@@ -5,9 +5,8 @@ Data from https://www.kaggle.com/mrisdal/fake-news // Use `$ docker-compose up &
 view (it will take a few seconds)
 
 ### TODO
-- Make dictionary generation a separate process
-- Multiple instances balanced by nginx
 - Bigger markov prefix
 - Adjust terms for special cases like "RE:" and keeping internal apostrophes
-- Random image
+- Multiple instances balanced by nginx
 - More styling (all uppercase?)
+- Random image on page
