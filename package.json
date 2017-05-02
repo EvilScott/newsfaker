@@ -13,6 +13,7 @@
   },
   "scripts": {
     "start": "nodemon server.js",
-    "build-dict": "node markov.js"
+    "build-dict": "node markov.js",
+    "redis-cli": "docker-compose run redis redis-cli -h redis"
   }
 }

@@ -17,6 +17,8 @@ services:
     build:
       context: .
       dockerfile: 'Dockerfile.dict'
+    volumes:
+      - ".:/app"
     links:
       - "redis:redis"
 
