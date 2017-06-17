@@ -1,7 +1,6 @@
 FROM kkarczmarczyk/node-yarn
 WORKDIR /app
-ADD . /app
 RUN yarn install
-RUN npm install -g nodemon
-EXPOSE 4000
+RUN yarn global add nodemon
+EXPOSE 8080
 ENTRYPOINT yarn start

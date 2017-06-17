@@ -7,6 +7,5 @@ view (it will take a few seconds)
 ### TODO
 - Multiple prefix dictionaries and fall back on no find 
 - Adjust terms for special cases like "RE:" and keeping internal apostrophes
-- Multiple instances balanced by nginx
 - More styling (all uppercase?)
 - Random image on page

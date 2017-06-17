@@ -1,26 +1,70 @@
 version: '3.0'
+
 services:
-  web:
-    build:
-      context: .
-      dockerfile: 'Dockerfile.web'
-    ports:
-      - "4000:4000"
+  server:
+    image: 'nginx'
     volumes:
-      - ".:/app"
+      - './nginx.conf:/etc/nginx/nginx.conf:ro'
     links:
-      - "redis:redis"
+      - 'web1'
+      - 'web2'
+      - 'web3'
+    ports:
+      - '4000:4000'
+
+  web1:
+    build:
+      context: '.'
+      dockerfile: 'Dockerfile.web'
+    volumes:
+      - '.:/app'
+    ports:
+      - '8080'
+    links:
+      - 'redis'
     depends_on:
-      - dict
+      - 'dict'
+    environment:
+      - 'SERVER_NO=1'
+
+  web2:
+    build:
+      context: '.'
+      dockerfile: 'Dockerfile.web'
+    volumes:
+      - '.:/app'
+    ports:
+      - '8080'
+    links:
+      - 'redis'
+    depends_on:
+      - 'dict'
+    environment:
+      - 'SERVER_NO=2'
+
+  web3:
+    build:
+      context: '.'
+      dockerfile: 'Dockerfile.web'
+    volumes:
+      - '.:/app'
+    ports:
+      - '8080'
+    links:
+      - 'redis'
+    depends_on:
+      - 'dict'
+    environment:
+      - 'SERVER_NO=3'
 
   dict:
     build:
-      context: .
+      context: '.'
       dockerfile: 'Dockerfile.dict'
     volumes:
-      - ".:/app"
+      - '.:/app'
     links:
-      - "redis:redis"
+      - 'redis'
 
   redis:
-    image: redis
+    image: 'redis'
