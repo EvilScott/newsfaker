@@ -1,6 +1,0 @@
-FROM kkarczmarczyk/node-yarn
-WORKDIR /app
-RUN yarn install
-RUN yarn global add nodemon
-EXPOSE 8080
-ENTRYPOINT yarn start

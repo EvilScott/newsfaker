@@ -1,5 +1,3 @@
 FROM kkarczmarczyk/node-yarn
 WORKDIR /app
 RUN yarn install
-RUN yarn global add nodemon
-ENTRYPOINT yarn build-dict

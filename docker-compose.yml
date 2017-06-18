@@ -1,70 +1,32 @@
-version: '3.0'
+version: '2'
 
 services:
-  server:
-    image: 'nginx'
-    volumes:
-      - './nginx.conf:/etc/nginx/nginx.conf:ro'
+  lb:
+    image: 'dockercloud/haproxy'
     links:
-      - 'web1'
-      - 'web2'
-      - 'web3'
+      - 'web'
     ports:
-      - '4000:4000'
+      - '4000:80'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
 
-  web1:
-    build:
-      context: '.'
-      dockerfile: 'Dockerfile.web'
+  web:
+    build: '.'
     volumes:
       - '.:/app'
+    links:
+      - 'redis:redis'
     ports:
       - '8080'
-    links:
-      - 'redis'
-    depends_on:
-      - 'dict'
-    environment:
-      - 'SERVER_NO=1'
-
-  web2:
-    build:
-      context: '.'
-      dockerfile: 'Dockerfile.web'
-    volumes:
-      - '.:/app'
-    ports:
-      - '8080'
-    links:
-      - 'redis'
-    depends_on:
-      - 'dict'
-    environment:
-      - 'SERVER_NO=2'
-
-  web3:
-    build:
-      context: '.'
-      dockerfile: 'Dockerfile.web'
-    volumes:
-      - '.:/app'
-    ports:
-      - '8080'
-    links:
-      - 'redis'
-    depends_on:
-      - 'dict'
-    environment:
-      - 'SERVER_NO=3'
+    entrypoint: 'node server.js'
 
   dict:
-    build:
-      context: '.'
-      dockerfile: 'Dockerfile.dict'
+    build: '.'
     volumes:
       - '.:/app'
     links:
-      - 'redis'
+      - 'redis:redis'
+    entrypoint: 'node markov.js'
 
   redis:
     image: 'redis'

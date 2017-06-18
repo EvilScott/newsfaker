@@ -12,7 +12,7 @@ app.get('/', (req, res) => res.render('index'));
 app.get('/headline', (req, res) => {
     markov.starterKey()
         .then(starter => markov.generateHeadline(starter.split(' ')))
-        .then(val => res.json({ headline: val, server: process.env.SERVER_NO }))
+        .then(val => res.json({ headline: val, server: process.env.HOSTNAME }))
         .catch(err => res.send(err.stack));
 });
 
